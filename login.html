@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Login</title>
+	<!-- Webix Library -->
+	<script type="text/javascript" src="codebase/webix.js"></script>
+	<link rel="stylesheet" type="text/css" href="codebase/webix.css">
+
+	
+</head>
+<body>
+	<script type="text/javascript">
+		webix.ui({
+			view:"form",
+			id:"formLogin",
+			elements:[
+				{view:"text", name:"user", label:"Username"},
+				{view:"text", name:"pass", label:"Password", type:"password"},
+				{ cols:[
+					{},
+					{view:"button", value:"Masuk", id:"masuk"},
+					{}
+				]}
+			]
+		});
+	
+
+	$$("masuk").attachEvent("onItemClick", function(){
+	var dataDiKirim = $$("formLogin").getValues();
+	webix.ajax().post("http://localhost:3000/login/login", dataDiKirim,{
+	success: function(text,data,xml){
+		var hasil = data.json();
+		var dataLogin = hasil.data; 
+		webix.storage.session.put("login",dataLogin); //save session token
+		webix.message("berhasil login");
+		window.location="./"; // kembali ke halaman awal
+	},
+	error:function(text,data,xml){
+		webix.alert("gagal login");
+	}
+
+	});
+	});
+</script>
+</body>
+</html>

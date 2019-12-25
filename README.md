@@ -1,6 +1,6 @@
 # jet-start
    UI web service dengan webix-jet-master
-   - cd jet-start
+   - cd jet-start-master
    - npm install
    - npm start
      
